@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Covoiturage Montréal — Grève STM</title>
+  <meta name="description" content="Offre un lift ou trouve un lift par arrondissement. Hub central relié aux formulaires et au tableau des matchs.">
+  <meta property="og:title" content="Covoiturage Montréal — Grève STM">
+  <meta property="og:description" content="Offre un lift ou trouve un lift par arrondissement.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/preview.png">
+  <meta property="og:url" content="__HUB_URL__">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Covoiturage Montréal — Grève STM">
+  <meta name="twitter:description" content="Offre un lift ou trouve un lift par arrondissement.">
+  <meta name="twitter:image" content="assets/preview.png">
+  <link rel="icon" href="assets/favicon.svg">
+  <style>
+    :root { --bg:#0f172a; --fg:#e2e8f0; --muted:#94a3b8; --brand:#22c55e; --brand-2:#06b6d4; --card:#0b1224; --accent:#f59e0b; }
+    *{box-sizing:border-box} html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b1022,#0f172a 35%,#0b1022);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol',sans-serif}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px;padding:8px 0 24px}
+    header img.logo{width:40px;height:40px} header h1{margin:0;font-size:clamp(1.4rem,2.8vw,2.2rem);line-height:1.2}
+    header p{margin:4px 0 0;color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1fr;gap:20px;padding:18px;border:1px solid #1f2937;background:linear-gradient(180deg,#0f172a,#0b1022);border-radius:14px;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 10px 30px rgba(0,0,0,.4)}
+    .cta-row{display:grid;grid-template-columns:1fr;gap:12px}
+    .btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;border-radius:12px;text-decoration:none;color:#001b0e;background:linear-gradient(180deg,#34d399,#22c55e);font-weight:700;font-size:1.05rem;border:0;text-align:center;transition:.2s}
+    .btn.secondary{background:linear-gradient(180deg,#67e8f9,#22d3ee);color:#062029}
+    .btn.ghost{background:transparent;color:var(--fg);border:1px dashed #334155}
+    .btn.disabled{opacity:.55;pointer-events:none;filter:grayscale(.2)}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    .card{background:#0b1224;border:1px solid #1f2937;border-radius:12px;padding:16px}
+    .card h3{margin:0 0 10px;font-size:1.05rem}
+    footer{margin:26px 0 12px;color:var(--muted);font-size:.95rem}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace}
+    .small{font-size:.94rem;color:var(--muted)}
+    .kbd{border:1px solid #334155;padding:2px 6px;border-radius:6px;background:#0b1328;font-size:.95em}
+    .share-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .share-row a{text-decoration:none}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{padding:6px 10px;background:#0b1328;border:1px solid #1f2937;border-radius:999px;color:#cbd5e1;font-size:.9rem}
+    .warn{background:#29150b;border:1px solid #7c2d12;color:#fdba74;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+    .cfg{position:fixed;right:14px;bottom:14px;background:#0b1328;border:1px solid #1f2937;border-radius:10px;padding:10px 12px;color:#cbd5e1;font-size:.92rem}
+    .cfg a{color:#67e8f9;text-decoration:none}
+    .cfg-panel{position:fixed;inset:auto 14px 64px auto;right:14px;max-width:420px;background:#0b1328;border:1px solid #1f2937;border-radius:12px;padding:12px 12px;display:none}
+    .cfg-panel label{display:block;font-size:.9rem;color:#cbd5e1;margin:8px 0 6px}
+    .cfg-panel input{width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#0b1328;color:#e2e8f0}
+    .cfg-panel .row{display:flex;gap:8px;margin-top:10px}
+    .cfg-panel button{flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#111b33;color:#e2e8f0;cursor:pointer}
+    @media(min-width:740px){ .cta-row{grid-template-columns:1fr 1fr 1fr} .grid{grid-template-columns:1fr 1fr 1fr} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="assets/favicon.svg" class="logo" alt="Logo">
+      <div>
+        <h1>Covoiturage Montréal — Grève STM</h1>
+        <p>Hub central: propose un lift, trouve un lift, consulte les matchs et partage le lien en 1 clic.</p>
+      </div>
+    </header>
+
+    <section id="note" class="warn" style="display:none"></section>
+
+    <section class="hero">
+      <div class="cta-row">
+        <a class="btn disabled" id="linkOffers" href="#" target="_blank" rel="noopener">🚗 J’offre un lift</a>
+        <a class="btn secondary disabled" id="linkRequests" href="#" target="_blank" rel="noopener">🧍 Je cherche un lift</a>
+        <a class="btn ghost disabled" id="linkMatches" href="#" target="_blank" rel="noopener" title="Ouvre le tableau (lecture seule)">📊 Voir les matchs</a>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Comment ça marche ?</h3>
+          <ol>
+            <li>Remplis le formulaire <strong>OFFRE</strong> ou <strong>DEMANDE</strong>.</li>
+            <li>Le système appaire automatiquement par <em>arrondissement/FSA</em> et par <em>heure</em>.</li>
+            <li>Tu reçois un courriel quand un match est trouvé (conducteur + passager).</li>
+          </ol>
+          <p class="small">Astuce: indique les 3 premières lettres du code postal (ex. <span class="kbd">H2X</span>).</p>
+        </div>
+        <div class="card">
+          <h3>Partager vite</h3>
+          <div class="share-row">
+            <a class="badge" id="shareCopy" href="#">🔗 Copier le lien</a>
+            <a class="badge" id="shareWA" target="_blank" rel="noopener">🟢 WhatsApp</a>
+            <a class="badge" id="shareFB" target="_blank" rel="noopener">🔵 Facebook</a>
+            <a class="badge" id="shareX"  target="_blank" rel="noopener">⚫ X (Twitter)</a>
+          </div>
+          <p class="small">Sur mobile, essaie le partage natif: <span class="kbd">⤴︎ Share</span>.</p>
+        </div>
+        <div class="card">
+          <h3>Règles & sécurité</h3>
+          <ul class="small">
+            <li>Ponctualité, ceinture, respect.</li>
+            <li>Point de rencontre public. Partage d’itinéraire si possible.</li>
+            <li>Contribution essence: d’accord à l’avance.</li>
+          </ul>
+          <div class="badges">
+            <span class="badge">#Covoiturage</span>
+            <span class="badge">#MTL</span>
+            <span class="badge">#STM</span>
+            <span class="badge">#GreveSTM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Hub statique. Configurez vos liens via la ⚙️ <strong>Config rapide</strong> (en bas à droite). 
+      <div class="small" style="margin-top:8px">Ce site ne remplace pas des services professionnels de transport. Respectez le Code de la route.</div>
+    </footer>
+  </div>
+
+  <div class="cfg"><a href="#" id="cfgToggle">⚙️ Config rapide</a></div>
+  <div class="cfg-panel" id="cfgPanel">
+    <label>Formulaire OFFRES (URL)</label>
+    <input id="cfgOffers" placeholder="https://docs.google.com/forms/..." />
+    <label>Formulaire DEMANDES (URL)</label>
+    <input id="cfgDemands" placeholder="https://docs.google.com/forms/..." />
+    <label>Matchs (URL Google Sheet en lecture)</label>
+    <input id="cfgSheet" placeholder="https://docs.google.com/spreadsheets/..." />
+    <div class="row">
+      <button id="cfgSave">Enregistrer</button>
+      <button id="cfgClear">Effacer</button>
+      <button id="cfgClose">Fermer</button>
+    </div>
+    <p class="small" style="margin-top:6px">Astuce: vous pouvez passer les liens dans l’URL publique, p.ex. <span class="mono">?offers=...&demandes=...&sheet=...</span></p>
+  </div>
+
+  <script>
+    // Helpers
+    const $ = (id) => document.getElementById(id);
+    const isHttp = (u) => /^https?:\/\//i.test(u||"");
+    const params = new URLSearchParams(location.search);
+
+    function getCfg() {
+      const cfg = {
+        offers: params.get('offers') || localStorage.getItem('covoit_offers') || "__LINK_OFFRES__",
+        demands: params.get('demandes') || params.get('demands') || localStorage.getItem('covoit_demands') || "__LINK_DEMANDES__",
+        sheet: params.get('sheet') || localStorage.getItem('covoit_sheet') || "__LINK_SHEET_VIEW__",
+        hub: params.get('hub') || location.href.replace(/index\.html?$/i, '').split('#')[0]
+      };
+      return cfg;
+    }
+
+    function applyCfg(cfg) {
+      const offersBtn = $('linkOffers');
+      const demandsBtn = $('linkRequests');
+      const sheetBtn  = $('linkMatches');
+
+      function setBtn(btn, url){
+        if (isHttp(url) && !/^__LINK_/.test(url)) {
+          btn.classList.remove('disabled');
+          btn.href = url;
+          btn.title = "";
+        } else {
+          btn.classList.add('disabled');
+          btn.href = "#";
+          btn.title = "Configurer le lien via ⚙️ Config rapide";
+        }
+      }
+      setBtn(offersBtn, cfg.offers);
+      setBtn(demandsBtn, cfg.demands);
+      setBtn(sheetBtn,  cfg.sheet);
+
+      // Share
+      const hubUrl = cfg.hub;
+      $('shareWA').href = "https://wa.me/?text=" + encodeURIComponent("Covoiturage MTL — Grève STM • Hub ➜ " + hubUrl);
+      $('shareFB').href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(hubUrl);
+      $('shareX').href  = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("🚗 Covoiturage MTL — Grève STM ➜ ") + "&url=" + encodeURIComponent(hubUrl) + "&hashtags=Covoiturage,MTL,STM,GreveSTM";
+
+      $('shareCopy').onclick = (e)=>{ e.preventDefault(); navigator.clipboard.writeText(hubUrl).then(()=>{
+        $('shareCopy').textContent = "✅ Lien copié";
+        setTimeout(()=> $('shareCopy').textContent = "🔗 Copier le lien", 1500);
+      }).catch(()=> alert("Copiez manuellement: " + hubUrl)); };
+    }
+
+    function showNotes(cfg){
+      const note = $('note');
+      const msgs = [];
+      if (location.protocol === 'file:') {
+        msgs.push("Vous ouvrez le fichier en local (file://). Les aperçus Facebook/X fonctionneront seulement une fois hébergé en HTTPS.");
+      }
+      if (!isHttp(cfg.offers) || !isHttp(cfg.demands)) {
+        msgs.push("Cliquez sur ⚙️ Config rapide et collez vos liens OFFRES/DEMANDES/MATCHS pour activer les boutons.");
+      }
+      if (msgs.length){ note.style.display = 'block'; note.innerHTML = msgs.map(m=>`• ${m}`).join('<br>'); }
+      else { note.style.display = 'none'; }
+    }
+
+    // Wire config panel
+    function bindCfgPanel(cfg){
+      const panel = $('cfgPanel');
+      $('cfgToggle').onclick = (e)=>{ e.preventDefault(); panel.style.display = (panel.style.display==='block'?'none':'block'); };
+      $('cfgClose').onclick = ()=> panel.style.display = 'none';
+      $('cfgOffers').value = cfg.offers.startsWith("__LINK_") ? "" : cfg.offers;
+      $('cfgDemands').value = cfg.demands.startsWith("__LINK_") ? "" : cfg.demands;
+      $('cfgSheet').value  = cfg.sheet.startsWith("__LINK_")  ? "" : cfg.sheet;
+
+      $('cfgSave').onclick = ()=>{
+        const o = $('cfgOffers').value.trim();
+        const d = $('cfgDemands').value.trim();
+        const s = $('cfgSheet').value.trim();
+        if (o) localStorage.setItem('covoit_offers', o);
+        if (d) localStorage.setItem('covoit_demands', d);
+        if (s) localStorage.setItem('covoit_sheet', s);
+        const newCfg = getCfg();
+        applyCfg(newCfg);
+        showNotes(newCfg);
+        panel.style.display = 'none';
+      };
+      $('cfgClear').onclick = ()=>{
+        localStorage.removeItem('covoit_offers');
+        localStorage.removeItem('covoit_demands');
+        localStorage.removeItem('covoit_sheet');
+        $('cfgOffers').value = $('cfgDemands').value = $('cfgSheet').value = "";
+        const newCfg = getCfg();
+        applyCfg(newCfg);
+        showNotes(newCfg);
+      };
+    }
+
+    // Init
+    const cfg = getCfg();
+    applyCfg(cfg);
+    showNotes(cfg);
+    bindCfgPanel(cfg);
+  </script>
+</body>
+</html>

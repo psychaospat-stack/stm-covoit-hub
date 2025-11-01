@@ -1,0 +1,5 @@
+QUICK START — stm_covoit_hub_v1_2
+1) Ouvrez index.html. Si les boutons sont gris, cliquez sur ⚙️ Config rapide.
+2) Collez vos 3 liens (OFFRES, DEMANDES, MATCHS) puis Enregistrer.
+3) Testez les boutons.
+4) Hébergez le dossier pour partager sur Facebook/X (HTTPS requis pour les aperçus).
